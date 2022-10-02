@@ -1,0 +1,36 @@
+﻿@model List<u21449067_HW05.Models.BorrowModel>
+@{
+    ViewBag.Title = "BookDetails";
+}
+
+<h2></h2>
+
+<br />
+
+<h2># Borrows - </h2>
+
+<div class="col-md-12">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Taken Date</th>
+                <th scope="col">Brought Date</th>
+                <th scope="col">Borrowed By</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var borrow in Model)
+            {
+                <tr>
+                    <td>@borrow.BorrowID</td>
+                    <td>@borrow.TakenDate</td>
+                    <td>@borrow.BroughtDate</td>
+                    <td>@borrow.Student.StudentName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

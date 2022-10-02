@@ -1,0 +1,74 @@
+﻿@*@model u21449067_HW05.Models.BookModel*@
+@model List<u21449067_HW05.Models.BookModel>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div>
+    <h3>
+        Books
+    </h3>
+</div>
+
+<!--search-->
+@if (ViewBag.Status != 0)
+{
+<div class="row crudContainer">
+    <h1>Search book name</h1>
+    @using (Html.BeginForm("FuzzySearch", "Home", FormMethod.Post, new { style = "width:100%" }))
+    {
+        <input type="text" style="width:50%;max-width:none; display:inline" name="searchText" class="form-control" placeholder="Search" />
+  
+            @Html.DropDownList("Type", new SelectList(u21449067_HW05.Models.Service.types, "TypeID", "TypeName"), new { @class = "form-control", name="type", required = "false" });
+            @Html.DropDownList("Author", new SelectList(u21449067_HW05.Models.Service.authors, "AuthorID", "AuthorName"), new { @class = "form-control", name="author", required = "false" });
+       
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+    }
+</div>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-warning" title="Clear Search">Clear<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+}
+<div class="row">
+    <br>
+    <div class="col-md-2">
+
+    </div>
+
+    <br>
+    <div class="col-md-2">
+
+    </div>
+
+
+</div>
+<div class="col-md-12">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Author</th>
+                <th scope="col">Type</th>
+                <th scope="col">Page Counts</th>
+                <th scope="col">Points</th>
+                <th scope="col"></th>
+                @*<th scope="col">Status</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+            <tr>
+                <td>@book.BookID</td>
+                <td>@book.BookName</td>
+                <td>@book.Author.AuthorName @book.Author.AuthorSurname</td>
+                <td>@book.Type.TypeName</td>
+                <td>@book.pagecount</td>
+                <td>@book.point</td>
+                @*TODO: Call Service.GetStatus and pass through BookID*@
+                @*<td>@book.Status.getStatus</td>*@
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
