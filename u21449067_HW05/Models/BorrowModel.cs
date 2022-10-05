@@ -9,26 +9,19 @@ namespace u21449067_HW05.Models
     {
         public int BorrowID { get; set; }
 
-
-
-        public int StudentID { get; set; }
-
-
-
-        public int BookID { get; set; }
-
-
+        public BookModel Book { get; set; }
 
         public DateTime TakenDate { get; set; }
 
-        public DateTime BroughtDate { get; set; }
+        public DateTime? BroughtDate { get; set; }
 
-        public bool Status { get; set; }
+        public string Status { get; set; }
 
         public StudentModel Student { get; set; }
 
         public BorrowModel()
         {
+            Book = new BookModel();
             Student = new StudentModel();
         }
     }

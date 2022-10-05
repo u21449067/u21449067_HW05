@@ -13,25 +13,11 @@ namespace u21449067_HW05.Controllers
 
         private SqlConnection myConnection = new SqlConnection(Service.ConnectionString);
         private Service dataService = new Service();
+
         public ActionResult Index()
         {
             List<BookModel> books = null;
-            //if (HomeController.genderFilter != null && HomeController.genderFilter.EndsWith("ale"))
-            //{
             books = dataService.GetAllBooks();
-
-            //}
-            //else
-            //{
-            //    studentRecords = new StudentRecordsVM
-            //    {
-            //        Students = dataService.getAllStudentsByMarkRange(minFilter, maxFilter),
-            //        Images = dataService.getAllImages()
-            //    };
-            //}
-
-
-
             return View(books);
         }
 
@@ -100,6 +86,54 @@ namespace u21449067_HW05.Controllers
         {
             //    HomeController.genderFilter = gender;
             return RedirectToAction("Index");
+        }
+
+        public ActionResult ViewBook(int BookID)
+        {
+            return View("BookDetails", dataService.getAllBookBorrows(BookID));
+        }
+
+
+
+        public ActionResult FuzzySearch1(string searchText1, string Class)
+        {
+            List<StudentModel> students = new List<StudentModel>();
+            try
+            {
+                myConnection.Open();
+                //Read all person records for table
+
+                string searchQry1 = "SELECT S.studentId, S.name, S.surname, S.class FROM students AS S.name LIKE '%" + searchText1 + "%'";
+
+                if(Class != null)
+                {
+                    searchQry1 = searchQry1 +"AND S.class = " + Class; ;
+                }
+
+                SqlCommand myFuzzySearch1 = new SqlCommand(searchQry1, myConnection);
+                SqlDataReader myReader = myFuzzySearch1.ExecuteReader();
+
+                while (myReader.Read())
+                {
+                    StudentModel student = new StudentModel();
+                    student.StudentID = Convert.ToInt32(myReader["studentId"]);
+                    student.StudentName = Convert.ToString(myReader["name"]);
+                    student.Class = Convert.ToString(myReader["class"]);
+                    ViewBag.Status = 1;
+                    students.Add(student);
+                }
+                ViewBag.SearchStatus = 2;
+                ViewBag.SearchText = "Showing results for: '" + searchText1 + "'";
+            }
+            catch (Exception err)
+            {
+                ViewBag.Status = 0;
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+            return View("Index", students);
         }
 
     }

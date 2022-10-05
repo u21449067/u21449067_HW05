@@ -15,15 +15,15 @@ namespace u21449067_HW05.Models
 
         public AuthorModel Author { get; set; }
         public TypeModel Type { get; set; }
-        public BorrowModel Borrow { get; set; }
-        public Service Status { get; set; }
+        //public BorrowModel Borrow { get; set; }
+        public string Status { get; set; }
 
         public BookModel()
         {
             Author = new AuthorModel();
             Type = new TypeModel();
-            Borrow = new BorrowModel();
-            Status = new Service();
+            //Borrow = new BorrowModel();
+            //Status = new Service();
         }
     }
 }

@@ -51,8 +51,8 @@
                 <th scope="col">Type</th>
                 <th scope="col">Page Counts</th>
                 <th scope="col">Points</th>
-                <th scope="col"></th>
-                @*<th scope="col">Status</th>*@
+                <th scope="col">Status</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -67,6 +67,8 @@
                 <td>@book.point</td>
                 @*TODO: Call Service.GetStatus and pass through BookID*@
                 @*<td>@book.Status.getStatus</td>*@
+                <td>@Html.Label(u21449067_HW05.Models.Service.borrows.Where(x => x.Book.BookID == book.BookID).OrderByDescending(x => x.TakenDate).Select(x => x.Status).DefaultIfEmpty("Available").First())</td>
+                <td>@Html.ActionLink("View", "ViewBook", new { BookID = book.BookID}) </td>
             </tr>
             }
         </tbody>

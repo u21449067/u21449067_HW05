@@ -3,11 +3,12 @@
     ViewBag.Title = "BookDetails";
 }
 
-<h2></h2>
 
 <br />
 
-<h2># Borrows - </h2>
+<h2>@Html.Label(Model.Select(x => x.Book.BookName).First()) - @Html.Label(Model.OrderByDescending(x => x.TakenDate).Select(x => x.Status).First())</h2>
+
+<a href="~/Views/Home/ViewStudents.cshtml" class="button">View Students</a>
 
 <div class="col-md-12">
     <table class="table">
@@ -26,7 +27,7 @@
                     <td>@borrow.BorrowID</td>
                     <td>@borrow.TakenDate</td>
                     <td>@borrow.BroughtDate</td>
-                    <td>@borrow.Student.StudentName</td>
+                    <td>@borrow.Student.StudentName @borrow.Student.StudentSurname</td>
                 </tr>
             }
         </tbody>
